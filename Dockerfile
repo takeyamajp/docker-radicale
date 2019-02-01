@@ -5,13 +5,11 @@ MAINTAINER "Hiroki Takeyama"
 RUN yum -y install epel-release; \
     yum -y install python36 mod_ssl; \
     python3.6 -m ensurepip; \
-    pip3 install bcrypt; \
-    pip3 install passlib; \
+    pip3 install bcrypt passlib; \
     yum clean all;
 
 # radicale
-RUN mkdir /radicale; \
-    mkdir /conf; \
+RUN mkdir /radicale /conf; \
     pip3 install --upgrade radicale; \
     { \
     echo '[server]'; \
