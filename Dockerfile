@@ -43,8 +43,6 @@ RUN { \
     echo '  rm -f /conf/user'; \
     echo 'fi'; \
     echo 'htpasswd -Bbc /conf/user ${USER} ${PASSWORD} &>/dev/null'; \
-    echo 'chown -R radicale:radicale /radicale'; \
-    echo 'chown -R radicale:radicale /conf'; \
     echo 'exec "$@"'; \
     } > /usr/local/bin/entrypoint.sh; \
     chmod +x /usr/local/bin/entrypoint.sh;
