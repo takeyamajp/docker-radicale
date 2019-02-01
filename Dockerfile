@@ -12,7 +12,7 @@ RUN yum -y install epel-release; \
 # radicale
 RUN mkdir /radicale; \
     mkdir /conf; \
-    pip3 install --upgrade radicale
+    pip3 install --upgrade radicale; \
     { \
     echo '[server]'; \
     echo 'hosts = 0.0.0.0:443'; \
