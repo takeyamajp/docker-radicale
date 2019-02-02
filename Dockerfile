@@ -63,7 +63,7 @@ RUN { \
     echo 'if [ -e /conf/user ]; then'; \
     echo '  rm -f /conf/user'; \
     echo 'fi'; \
-    echo 'htpasswd -Bbc /conf/user ${USER} ${PASSWORD} &>/dev/null'; \
+    echo 'htpasswd -Bbc /conf/user ${USER} '\''${PASSWORD}'\'' &>/dev/null'; \
     echo 'exec "$@"'; \
     } > /usr/local/bin/entrypoint.sh; \
     chmod +x /usr/local/bin/entrypoint.sh;
