@@ -19,7 +19,7 @@ RUN mkdir /radicale /conf; \
     echo 'key = /etc/pki/tls/private/localhost.key'; \
     echo 'protocol = PROTOCOL_TLSv1_2'; \
     echo '[logging]'; \
-    echo 'debug = True'; \
+    echo 'config = /conf/log'; \
     echo '[auth]'; \
     echo 'type = htpasswd'; \
     echo 'htpasswd_filename= /conf/user'; \
@@ -27,6 +27,23 @@ RUN mkdir /radicale /conf; \
     echo '[storage]'; \
     echo 'filesystem_folder = /radicale'; \
     } >> /conf/conf;
+    { \
+    echo '[loggers]'; \
+    echo 'keys = root'; \
+    echo '[handlers]'; \
+    echo 'keys = console'; \
+    echo '[formatters]'; \
+    echo 'keys = full'; \
+    echo '[logger_root]'; \
+    echo 'level = INFO'; \
+    echo 'handlers = console'; \
+    echo '[handler_console]'; \
+    echo 'class = StreamHandler'; \
+    echo 'args = (sys.stdout,)'; \
+    echo 'formatter = full'; \
+    echo '[formatter_full]'; \
+    echo 'format = %(asctime)s - [%(thread)x] %(levelname)s: %(message)s'; \
+    } >> /conf/log;
 
 # entrypoint
 RUN { \
@@ -39,9 +56,10 @@ RUN { \
     echo '  sed -i "s/^\(ssl\) =.*/\1 = True/" /conf/conf'; \
     echo '  sed -i "s/^\(hosts.*\):.*/\1:443/" /conf/conf'; \
     echo 'fi'; \
-    echo 'sed -i "s/^\(debug\) =.*/\1 = False/" /conf/conf'; \
+    echo 'sed -i "s/^\(config\) =.*/\1 = /" /conf/conf'; \
     echo 'if [ ${LOG,,} = "true" ]; then'; \
-    echo '  sed -i "s/^\(debug\) =.*/\1 = True/" /conf/conf'; \
+    echo '  sed -i "s/^\(config\) =.*/\1 = \/conf\/log/" /conf/conf'; \
+    echo '  sed -i "s/^\(level\) =.*/\1 = ${LOG_LEVEL}/" /conf/log'; \
     echo 'fi'; \
     echo 'if [ -e /conf/user ]; then'; \
     echo '  rm -f /conf/user'; \
@@ -57,6 +75,7 @@ ENV TIMEZONE Asia/Tokyo
 ENV SSL true
 
 ENV LOG true
+ENV LOG_LEVEL INFO
 
 ENV USER user
 ENV PASSWORD password
