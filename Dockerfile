@@ -26,7 +26,7 @@ RUN mkdir /radicale /conf; \
     echo 'htpasswd_encryption = bcrypt'; \
     echo '[storage]'; \
     echo 'filesystem_folder = /radicale'; \
-    } >> /conf/conf;
+    } >> /conf/conf;'; \
     { \
     echo '[loggers]'; \
     echo 'keys = root'; \
