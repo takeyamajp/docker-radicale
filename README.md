@@ -11,7 +11,7 @@
     
     ENV SSL true
     
-    ENV LOGGING true
+    ENV LOG true
     
     ENV USER user  
     ENV PASSWORD password
