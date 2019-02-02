@@ -1,5 +1,4 @@
 # radicale
-[![Build Status](https://img.shields.io/docker/build/takeyamajp/radicale.svg)](https://hub.docker.com/r/takeyamajp/radicale/)
 [![Docker Stars](https://img.shields.io/docker/stars/takeyamajp/radicale.svg)](https://hub.docker.com/r/takeyamajp/radicale/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/takeyamajp/radicale.svg)](https://hub.docker.com/r/takeyamajp/radicale/)
 [![](https://img.shields.io/badge/GitHub-Dockerfile-orange.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/Dockerfile)
