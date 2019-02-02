@@ -17,7 +17,6 @@ RUN mkdir /radicale /conf; \
     echo 'ssl = True'; \
     echo 'certificate = /etc/pki/tls/certs/localhost.crt'; \
     echo 'key = /etc/pki/tls/private/localhost.key'; \
-    echo 'protocol = PROTOCOL_TLSv1_2'; \
     echo '[logging]'; \
     echo 'config = /conf/log'; \
     echo '[auth]'; \
