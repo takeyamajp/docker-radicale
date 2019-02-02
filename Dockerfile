@@ -18,6 +18,8 @@ RUN mkdir /radicale /conf; \
     echo 'certificate = /etc/pki/tls/certs/localhost.crt'; \
     echo 'key = /etc/pki/tls/private/localhost.key'; \
     echo 'protocol = PROTOCOL_TLSv1_2'; \
+    echo '[logging]'; \
+    echo 'debug = True'; \
     echo '[auth]'; \
     echo 'type = htpasswd'; \
     echo 'htpasswd_filename= /conf/user'; \
@@ -37,6 +39,10 @@ RUN { \
     echo '  sed -i "s/^\(ssl\) =.*/\1 = True/" /conf/conf'; \
     echo '  sed -i "s/^\(hosts.*\):.*/\1:443/" /conf/conf'; \
     echo 'fi'; \
+    echo 'sed -i "s/^\(debug\) =.*/\1 = False/" /conf/conf'; \
+    echo 'if [ ${LOG,,} = "true" ]; then'; \
+    echo '  sed -i "s/^\(debug\) =.*/\1 = True/" /conf/conf'; \
+    echo 'fi'; \
     echo 'if [ -e /conf/user ]; then'; \
     echo '  rm -f /conf/user'; \
     echo 'fi'; \
@@ -49,6 +55,8 @@ ENTRYPOINT ["entrypoint.sh"]
 ENV TIMEZONE Asia/Tokyo
 
 ENV SSL true
+
+ENV LOG true
 
 ENV USER user
 ENV PASSWORD password
