@@ -42,7 +42,7 @@ RUN mkdir /radicale /conf; \
     echo 'args = (sys.stdout,)'; \
     echo 'formatter = full'; \
     echo '[formatter_full]'; \
-    echo 'format = %(asctime)s - [%(thread)x] %(levelname)s: %(message)s'; \
+    echo 'format = %(asctime)s %(levelname)s: %(message)s'; \
     } >> /conf/log;
 
 # entrypoint
