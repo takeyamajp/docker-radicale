@@ -4,7 +4,7 @@
 [![](https://img.shields.io/badge/GitHub-Dockerfile-orange.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/Dockerfile)
 [![license](https://img.shields.io/github/license/takeyamajp/docker-radicale.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/LICENSE)
 
-This container is really easy to use and works out-of-the-box.
+This container is really easy to use and works out-of-the-box.  
 When your server is launched, you can check that everything's OK by going to http://localhost:5232/ with your browser!
 
     docker run -d -e SSL=false -p 5232:80 -v ~/.var/lib/radicale/collections:/radicale takeyamajp/radicale
