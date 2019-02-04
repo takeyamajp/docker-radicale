@@ -10,7 +10,7 @@ This container is really easy to use and works out-of-the-box.
 
 When your server is launched, you can check that everything's OK by going to http://localhost:5232/ with your browser!
 
-If you want to use this container with the SSL connection, You have to run it behind a reverse proxy server including a valid SSL certificate.
+If you want to use this container with the SSL connection, you have to run it behind a reverse proxy server including a valid SSL certificate.
 
     FROM centos:centos7  
     MAINTAINER "Hiroki Takeyama"
