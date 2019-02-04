@@ -6,6 +6,7 @@
 
 This container is really easy to use and works out-of-the-box.
 When your server is launched, you can check that everything's OK by going to http://localhost:5232/ with your browser!
+
     docker run -d -e SSL=false -p 5232:80 -v ~/.var/lib/radicale/collections:/radicale takeyamajp/radicale
 
 If you want to use this container with the SSL connection, You have to run it behind a reverse proxy server including a valid SSL certificate.
