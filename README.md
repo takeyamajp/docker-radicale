@@ -5,11 +5,10 @@
 [![license](https://img.shields.io/github/license/takeyamajp/docker-radicale.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/LICENSE)
 
 This container is really easy to use and works out-of-the-box.  
-When your server is launched, you can check that everything's OK by going to http://localhost:5232/ with your browser!
 
     docker run -d -e SSL=false -p 5232:80 -v ~/.var/lib/radicale/collections:/radicale takeyamajp/radicale
 
-If you want to use this container with the SSL connection, You have to run it behind a reverse proxy server including a valid SSL certificate.
+When your server is launched, you can check that everything's OK by going to http://localhost:5232/ with your browser!
 
     FROM centos:centos7  
     MAINTAINER "Hiroki Takeyama"
@@ -28,3 +27,5 @@ If you want to use this container with the SSL connection, You have to run it be
     
     EXPOSE 80  
     EXPOSE 443
+
+If you want to use this container with the SSL connection, You have to run it behind a reverse proxy server including a valid SSL certificate.
