@@ -4,6 +4,8 @@
 [![](https://img.shields.io/badge/GitHub-Dockerfile-orange.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/Dockerfile)
 [![license](https://img.shields.io/github/license/takeyamajp/docker-radicale.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/LICENSE)
 
+If you want to use this container with the SSL connection, You have to run it behind a reverse proxy server including a valid SSL certificate.
+
     FROM centos:centos7  
     MAINTAINER "Hiroki Takeyama"
     
