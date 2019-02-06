@@ -3,7 +3,7 @@ MAINTAINER "Hiroki Takeyama"
 
 # python
 RUN yum -y install epel-release; \
-    yum -y install python36 mod_ssl; \
+    yum -y install python36 httpd-tools; \
     python3.6 -m ensurepip; \
     pip3 install bcrypt passlib; \
     yum clean all;
@@ -15,8 +15,8 @@ RUN mkdir /radicale /conf; \
     echo '[server]'; \
     echo 'hosts = 0.0.0.0:443'; \
     echo 'ssl = True'; \
-    echo 'certificate = /etc/pki/tls/certs/localhost.crt'; \
-    echo 'key = /etc/pki/tls/private/localhost.key'; \
+    echo 'certificate = /conf/cert.pem'; \
+    echo 'key = /conf/key.pem'; \
     echo '[logging]'; \
     echo 'config = /conf/log'; \
     echo '[auth]'; \
@@ -42,7 +42,11 @@ RUN mkdir /radicale /conf; \
     echo 'formatter = full'; \
     echo '[formatter_full]'; \
     echo 'format = %(asctime)s %(levelname)s: %(message)s'; \
-    } >> /conf/log;
+    } >> /conf/log; \
+    yum -y install openssl; \
+    openssl genrsa -out "/conf/key.pem" 2048; \
+    openssl req -new -key "/conf/key.pem" -x509 -subj "/CN=radicale" -days 36500 -out "/conf/cert.pem"; \
+    yum clean all;
 
 # entrypoint
 RUN { \
