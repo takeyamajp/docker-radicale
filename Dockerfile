@@ -55,7 +55,7 @@ RUN { \
     echo 'rm -f /etc/localtime'; \
     echo 'ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime'; \
     echo 'openssl req -new -key "/conf/server.key" -subj "/CN=${HOSTNAME}" -out "/conf/server.csr"'; \
-    echo 'openssl x509 -req -days 36500 -in "/conf/server.csr" -signkey "/conf/server.key" -out "/conf/server.crt"'; \
+    echo 'openssl x509 -req -days 36500 -in "/conf/server.csr" -signkey "/conf/server.key" -out "/conf/server.crt" &>/dev/null'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
     echo 'sed -i "s/^\(hosts.*\):.*/\1:80/" /conf/conf'; \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
