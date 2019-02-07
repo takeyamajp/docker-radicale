@@ -45,7 +45,6 @@ RUN mkdir /radicale /conf; \
     } >> /conf/log; \
     yum -y install openssl; \
     openssl genrsa -out "/conf/key.pem" 2048; \
-    openssl req -new -key "/conf/key.pem" -x509 -subj "/CN=radicale" -days 36500 -out "/conf/cert.pem"; \
     yum clean all;
 
 # entrypoint
@@ -53,6 +52,7 @@ RUN { \
     echo '#!/bin/bash -eu'; \
     echo 'rm -f /etc/localtime'; \
     echo 'ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime'; \
+    echo 'openssl req -new -key "/conf/key.pem" -x509 -subj "/CN=${HOSTNAME}" -days 36500 -out "/conf/cert.pem"'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
     echo 'sed -i "s/^\(hosts.*\):.*/\1:80/" /conf/conf'; \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
