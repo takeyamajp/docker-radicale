@@ -15,8 +15,8 @@ RUN mkdir /radicale /conf; \
     echo '[server]'; \
     echo 'hosts = 0.0.0.0:443'; \
     echo 'ssl = True'; \
-    echo 'certificate = /conf/server.crt'; \
-    echo 'key = /conf/server.key'; \
+    echo 'certificate = /conf/cert.pem'; \
+    echo 'key = /conf/key.pem'; \
     echo '[logging]'; \
     echo 'config = /conf/log'; \
     echo '[auth]'; \
@@ -44,9 +44,7 @@ RUN mkdir /radicale /conf; \
     echo 'format = %(asctime)s %(levelname)s: %(message)s'; \
     } >> /conf/log; \
     yum -y install openssl; \
-    openssl genrsa -aes128 -passout pass:dummy -out "/conf/server.pass.key" 2048; \
-    openssl rsa -passin pass:dummy -in "/conf/server.pass.key" -out "/conf/server.key"; \
-    rm "/conf/server.pass.key"; \
+    openssl genrsa -out "/conf/key.pem" 2048; \
     yum clean all;
 
 # entrypoint
@@ -54,8 +52,7 @@ RUN { \
     echo '#!/bin/bash -eu'; \
     echo 'rm -f /etc/localtime'; \
     echo 'ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime'; \
-    echo 'openssl req -new -key "/conf/server.key" -subj "/CN=${HOSTNAME}" -out "/conf/server.csr"'; \
-    echo 'openssl x509 -req -days 36500 -in "/conf/server.csr" -signkey "/conf/server.key" -out "/conf/server.crt"'; \
+    echo 'openssl req -new -key "/conf/key.pem" -x509 -subj "/CN=${HOSTNAME}" -days 36500 -out "/conf/cert.pem"'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
     echo 'sed -i "s/^\(hosts.*\):.*/\1:80/" /conf/conf'; \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
