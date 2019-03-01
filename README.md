@@ -22,8 +22,8 @@ If you want to use this container with the SSL connection, you have to run it be
     ENV LOG true  
     ENV LOG_LEVEL INFO
     
-    ENV USER user  
-    ENV PASSWORD password
+    ENV USER user1,user2  
+    ENV PASSWORD password1,password2
     
     VOLUME /radicale
     
