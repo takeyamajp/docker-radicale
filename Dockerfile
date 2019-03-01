@@ -1,6 +1,14 @@
 FROM centos:centos7
 MAINTAINER "Hiroki Takeyama"
 
+# certificate
+RUN mkdir /cert; \
+    yum -y install openssl; \
+    openssl genrsa -aes128 -passout pass:dummy -out "/cert/key.pass.pem" 2048; \
+    openssl rsa -passin pass:dummy -in "/cert/key.pass.pem" -out "/cert/key.pem"; \
+    rm -f /cert/key.pass.pem; \
+    yum clean all;
+
 # python
 RUN yum -y install epel-release; \
     yum -y install python36 httpd-tools; \
@@ -15,8 +23,8 @@ RUN mkdir /radicale /conf; \
     echo '[server]'; \
     echo 'hosts = 0.0.0.0:443'; \
     echo 'ssl = True'; \
-    echo 'certificate = /conf/server.crt'; \
-    echo 'key = /conf/server.key'; \
+    echo 'certificate = /cert/cert.pem'; \
+    echo 'key = /cert/key.pem'; \
     echo '[logging]'; \
     echo 'config = /conf/log'; \
     echo '[auth]'; \
@@ -42,20 +50,19 @@ RUN mkdir /radicale /conf; \
     echo 'formatter = full'; \
     echo '[formatter_full]'; \
     echo 'format = %(asctime)s %(levelname)s: %(message)s'; \
-    } >> /conf/log; \
-    yum -y install openssl; \
-    openssl genrsa -aes128 -passout pass:dummy -out "/conf/server.pass.key" 2048; \
-    openssl rsa -passin pass:dummy -in "/conf/server.pass.key" -out "/conf/server.key"; \
-    rm "/conf/server.pass.key"; \
-    yum clean all;
+    } >> /conf/log;
 
 # entrypoint
 RUN { \
     echo '#!/bin/bash -eu'; \
     echo 'rm -f /etc/localtime'; \
     echo 'ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime'; \
-    echo 'openssl req -new -key "/conf/server.key" -subj "/CN=${HOSTNAME}" -out "/conf/server.csr"'; \
-    echo 'openssl x509 -req -days 36500 -in "/conf/server.csr" -signkey "/conf/server.key" -out "/conf/server.crt" &>/dev/null'; \
+    echo 'openssl req -new -key "/cert/key.pem" -subj "/CN=${HOST_NAME}" -out "/cert/csr.pem"'; \
+    echo 'openssl x509 -req -days 36500 -in "/cert/csr.pem" -signkey "/cert/key.pem" -out "/cert/cert.pem" &>/dev/null'; \
+    echo 'if [ -e /radicale/cert.pem ] && [ -e /radicale/key.pem ]; then'; \
+    echo '  cp -f /radicale/cert.pem /cert/cert.pem'; \
+    echo '  cp -f /radicale/key.pem /cert/key.pem'; \
+    echo 'fi'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
     echo 'sed -i "s/^\(hosts.*\):.*/\1:80/" /conf/conf'; \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
@@ -70,7 +77,13 @@ RUN { \
     echo 'if [ -e /conf/user ]; then'; \
     echo '  rm -f /conf/user'; \
     echo 'fi'; \
-    echo 'htpasswd -Bbc /conf/user ${USER} ${PASSWORD} &>/dev/null'; \
+    echo 'ARRAY_USER=(`echo ${USER} | tr "," " "`)'; \
+    echo 'ARRAY_PASSWORD=(`echo ${PASSWORD} | tr "," " "`)'; \
+    echo 'INDEX=0'; \
+    echo 'for e in ${ARRAY_USER[@]}; do'; \
+    echo '  htpasswd -Bbn ${ARRAY_USER[${INDEX}]} ${ARRAY_PASSWORD[${INDEX}]} | head -c -1 >> /conf/user'; \
+    echo '  ((INDEX+=1))'; \
+    echo 'done'; \
     echo 'exec "$@"'; \
     } > /usr/local/bin/entrypoint.sh; \
     chmod +x /usr/local/bin/entrypoint.sh;
@@ -83,8 +96,8 @@ ENV SSL true
 ENV LOG true
 ENV LOG_LEVEL INFO
 
-ENV USER user
-ENV PASSWORD password
+ENV USER user1,user2
+ENV PASSWORD password1,password2
 
 VOLUME /radicale
 
