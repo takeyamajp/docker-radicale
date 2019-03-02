@@ -59,9 +59,11 @@ RUN { \
     echo 'ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime'; \
     echo 'openssl req -new -key "/cert/key.pem" -subj "/CN=${HOSTNAME}" -out "/cert/csr.pem"'; \
     echo 'openssl x509 -req -days 36500 -in "/cert/csr.pem" -signkey "/cert/key.pem" -out "/cert/cert.pem" &>/dev/null'; \
+    echo 'sed -i "s/^\(certificate\) =.*/\1 = /cert/cert.pem/" /conf/conf'; \
+    echo 'sed -i "s/^\(key\) =.*/\1 = /cert/key.pem/" /conf/conf'; \
     echo 'if [ -e /radicale/cert.pem ] && [ -e /radicale/key.pem ]; then'; \
-    echo '  cp -f /radicale/cert.pem /cert/cert.pem'; \
-    echo '  cp -f /radicale/key.pem /cert/key.pem'; \
+    echo '  sed -i "s/^\(certificate\) =.*/\1 = /radicale/cert.pem/" /conf/conf'; \
+    echo '  sed -i "s/^\(key\) =.*/\1 = /radicale/key.pem/" /conf/conf'; \
     echo 'fi'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
     echo 'sed -i "s/^\(hosts.*\):.*/\1:80/" /conf/conf'; \
