@@ -25,3 +25,23 @@
     
     EXPOSE 80  
     EXPOSE 443
+
+## How to use
+This container is supposed to be used as a backend of a reverse proxy server.  
+However, it can be simply used without the reverse proxy server.
+
+    docker run -d --name radicale \  
+           -e TIMEZONE=Asia/Tokyo \  
+           -e SSL=false \  
+           -e USER=user \  
+           -e PASSWORD=password \  
+           -p 8080:80 \  
+           takeyamajp/radicale
+
+Please access it via `http://localhost:8080` in your browser.
+
+## Time zone
+You can use any time zone such as America/Chicago that can be used in CentOS.  
+
+See below for zones.  
+https://www.unicode.org/cldr/charts/latest/verify/zones/en.html
