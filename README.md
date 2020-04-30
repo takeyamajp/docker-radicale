@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/github/license/takeyamajp/docker-radicale.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/LICENSE)
 
 ### Supported tags and respective Dockerfile links  
-- [`latest`, `centos8`](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile)
+- [`latest`, `centos8` (In trouble with Docker Hub)](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile)
 - [`centos7`](https://github.com/takeyamajp/docker-radicale/blob/master/centos7/Dockerfile)
 
 ### Image summary
