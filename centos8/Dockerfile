@@ -26,7 +26,7 @@ RUN mkdir /radicale /conf; \
     echo 'certificate = /cert/cert.pem'; \
     echo 'key = /cert/key.pem'; \
     echo '[logging]'; \
-    echo 'level = info'; \
+    echo 'level = warning'; \
     echo '[auth]'; \
     echo 'type = htpasswd'; \
     echo 'htpasswd_filename= /conf/user'; \
