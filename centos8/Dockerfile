@@ -21,36 +21,19 @@ RUN mkdir /radicale /conf; \
     pip3 install --upgrade radicale; \
     { \
     echo '[server]'; \
-    echo 'hosts = 0.0.0.0:443'; \
-    echo 'ssl = True'; \
+    echo 'hosts = 0.0.0.0:5232'; \
+    echo 'ssl = False'; \
     echo 'certificate = /cert/cert.pem'; \
     echo 'key = /cert/key.pem'; \
     echo '[logging]'; \
-    echo 'config = /conf/log'; \
+    echo 'level = info'; \
     echo '[auth]'; \
     echo 'type = htpasswd'; \
     echo 'htpasswd_filename= /conf/user'; \
     echo 'htpasswd_encryption = bcrypt'; \
     echo '[storage]'; \
     echo 'filesystem_folder = /radicale'; \
-    } >> /conf/conf; \
-    { \
-    echo '[loggers]'; \
-    echo 'keys = root'; \
-    echo '[handlers]'; \
-    echo 'keys = console'; \
-    echo '[formatters]'; \
-    echo 'keys = full'; \
-    echo '[logger_root]'; \
-    echo 'level = INFO'; \
-    echo 'handlers = console'; \
-    echo '[handler_console]'; \
-    echo 'class = StreamHandler'; \
-    echo 'args = (sys.stdout,)'; \
-    echo 'formatter = full'; \
-    echo '[formatter_full]'; \
-    echo 'format = %(asctime)s %(levelname)s: %(message)s'; \
-    } >> /conf/log;
+    } >> /conf/conf;
 
 # entrypoint
 RUN { \
@@ -60,21 +43,11 @@ RUN { \
     echo 'openssl x509 -req -days 36500 -in "/cert/csr.pem" -signkey "/cert/key.pem" -out "/cert/cert.pem" &>/dev/null'; \
     echo 'sed -i "s/^\(certificate\) =.*/\1 = \/cert\/cert.pem/" /conf/conf'; \
     echo 'sed -i "s/^\(key\) =.*/\1 = \/cert\/key.pem/" /conf/conf'; \
-    echo 'if [ -e /radicale/cert.pem ] && [ -e /radicale/key.pem ]; then'; \
-    echo '  sed -i "s/^\(certificate\) =.*/\1 = \/radicale\/cert.pem/" /conf/conf'; \
-    echo '  sed -i "s/^\(key\) =.*/\1 = \/radicale\/key.pem/" /conf/conf'; \
-    echo 'fi'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
-    echo 'sed -i "s/^\(hosts.*\):.*/\1:80/" /conf/conf'; \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
     echo '  sed -i "s/^\(ssl\) =.*/\1 = True/" /conf/conf'; \
-    echo '  sed -i "s/^\(hosts.*\):.*/\1:443/" /conf/conf'; \
     echo 'fi'; \
-    echo 'sed -i "s/^\(config\) =.*/\1 = /" /conf/conf'; \
-    echo 'if [ ${LOG,,} = "true" ]; then'; \
-    echo '  sed -i "s/^\(config\) =.*/\1 = \/conf\/log/" /conf/conf'; \
-    echo '  sed -i "s/^\(level\) =.*/\1 = ${LOG_LEVEL}/" /conf/log'; \
-    echo 'fi'; \
+    echo '  sed -i "s/^\(level\) =.*/\1 = ${LOG_LEVEL}/" /conf/conf'; \
     echo 'if [ -e /conf/user ]; then'; \
     echo '  rm -f /conf/user'; \
     echo 'fi'; \
@@ -91,18 +64,16 @@ RUN { \
 
 ENV TIMEZONE Asia/Tokyo
 
-ENV SSL true
+ENV SSL false
 
-ENV LOG true
-ENV LOG_LEVEL INFO
+ENV LOG_LEVEL info
 
 ENV USER user1,user2
 ENV PASSWORD password1,password2
 
 VOLUME /radicale
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5232
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["python3.6", "-m", "radicale", "--config", "/conf/conf"]
