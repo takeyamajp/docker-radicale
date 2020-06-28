@@ -13,9 +13,8 @@
     
     ENV TIMEZONE Asia/Tokyo
     
-    ENV SSL true
+    ENV SSL false
     
-    ENV LOG true  
     ENV LOG_LEVEL INFO
     
     ENV USER user1,user2  
@@ -23,8 +22,7 @@
     
     VOLUME /radicale
     
-    EXPOSE 80  
-    EXPOSE 443
+    EXPOSE 5232
 
 ## How to use
 This container is supposed to be used as a backend of a reverse proxy server.  
@@ -35,10 +33,10 @@ However, it can be simply used without the reverse proxy server.
            -e SSL=false \  
            -e USER=user \  
            -e PASSWORD=password \  
-           -p 8080:80 \  
+           -p 5232:5232 \  
            takeyamajp/radicale
 
-Please access it via `http://localhost:8080` in your browser.
+Please access it via `http://localhost:5232` in your browser.
 
 ## Time zone
 You can use any time zone such as America/Chicago that can be used in CentOS.  
