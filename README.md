@@ -13,7 +13,7 @@
     
     ENV TIMEZONE Asia/Tokyo
     
-    ENV SSL false
+    ENV SSL true
     
     ENV LOG_LEVEL warning
     
@@ -30,6 +30,7 @@ However, it can be simply used without the reverse proxy server.
 
     docker run -d --name radicale \  
            -e TIMEZONE=Asia/Tokyo \  
+           -e SSL=false \  
            -e USER=user \  
            -e PASSWORD=password \  
            -p 5232:5232 \  
