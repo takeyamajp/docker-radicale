@@ -44,6 +44,10 @@ See below for zones.
 https://www.unicode.org/cldr/charts/latest/verify/zones/en.html
 
 ## Logging
+Available log levels:
+
+    debug, info, warning, error, critical
+
 Use the following command to view the logs in real time.
 
     docker logs -f radicale
