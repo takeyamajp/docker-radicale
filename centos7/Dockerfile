@@ -26,7 +26,7 @@ RUN mkdir /radicale /conf; \
     echo 'certificate = /cert/cert.pem'; \
     echo 'key = /cert/key.pem'; \
     echo '[logging]'; \
-    echo 'level = info'; \
+    echo 'level = warning'; \
     echo '[auth]'; \
     echo 'type = htpasswd'; \
     echo 'htpasswd_filename= /conf/user'; \
@@ -67,7 +67,7 @@ ENV TIMEZONE Asia/Tokyo
 
 ENV SSL false
 
-ENV LOG_LEVEL info
+ENV LOG_LEVEL warning
 
 ENV USER user1,user2
 ENV PASSWORD password1,password2
