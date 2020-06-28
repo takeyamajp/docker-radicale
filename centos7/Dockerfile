@@ -65,7 +65,7 @@ RUN { \
 
 ENV TIMEZONE Asia/Tokyo
 
-ENV SSL false
+ENV SSL true
 
 ENV LOG_LEVEL warning
 
