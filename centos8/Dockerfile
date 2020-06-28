@@ -66,7 +66,7 @@ ENV TIMEZONE Asia/Tokyo
 
 ENV SSL false
 
-ENV LOG_LEVEL info
+ENV LOG_LEVEL warning
 
 ENV USER user1,user2
 ENV PASSWORD password1,password2
