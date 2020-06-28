@@ -47,7 +47,7 @@ RUN { \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
     echo '  sed -i "s/^\(ssl\) =.*/\1 = True/" /conf/conf'; \
     echo 'fi'; \
-    echo '  sed -i "s/^\(level\) =.*/\1 = ${LOG_LEVEL}/" /conf/conf'; \
+    echo 'sed -i "s/^\(level\) =.*/\1 = ${LOG_LEVEL}/" /conf/conf'; \
     echo 'if [ -e /conf/user ]; then'; \
     echo '  rm -f /conf/user'; \
     echo 'fi'; \
