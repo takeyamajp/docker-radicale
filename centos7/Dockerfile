@@ -22,7 +22,7 @@ RUN mkdir /radicale /conf; \
     { \
     echo '[server]'; \
     echo 'hosts = 0.0.0.0:5232'; \
-    echo 'ssl = False'; \
+    echo 'ssl = True'; \
     echo 'certificate = /cert/cert.pem'; \
     echo 'key = /cert/key.pem'; \
     echo '[logging]'; \
@@ -41,8 +41,6 @@ RUN { \
     echo 'ln -fs /usr/share/zoneinfo/${TIMEZONE} /etc/localtime'; \
     echo 'openssl req -new -sha384 -key "/cert/key.pem" -subj "/CN=${HOSTNAME}" -out "/cert/csr.pem"'; \
     echo 'openssl x509 -req -days 36500 -in "/cert/csr.pem" -signkey "/cert/key.pem" -out "/cert/cert.pem" &>/dev/null'; \
-    echo 'sed -i "s/^\(certificate\) =.*/\1 = \/cert\/cert.pem/" /conf/conf'; \
-    echo 'sed -i "s/^\(key\) =.*/\1 = \/cert\/key.pem/" /conf/conf'; \
     echo 'sed -i "s/^\(ssl\) =.*/\1 = False/" /conf/conf'; \
     echo 'if [ ${SSL,,} = "true" ]; then'; \
     echo '  sed -i "s/^\(ssl\) =.*/\1 = True/" /conf/conf'; \
