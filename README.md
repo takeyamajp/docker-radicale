@@ -5,7 +5,7 @@ Star this repository if it is useful for you.
 [![license](https://img.shields.io/github/license/takeyamajp/docker-radicale.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/LICENSE)
 
 ### Supported tags and respective Dockerfile links  
-- `rocky8` (Rocky Linux 8.3)
+- `rocky8` (Rocky Linux)
 - [`latest`, `centos8`](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile) (We have finished support to CentOS 8.)
 - [`centos7`](https://github.com/takeyamajp/docker-radicale/blob/master/centos7/Dockerfile)
 
