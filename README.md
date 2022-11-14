@@ -5,12 +5,12 @@ Star this repository if it is useful for you.
 [![license](https://img.shields.io/github/license/takeyamajp/docker-radicale.svg)](https://github.com/takeyamajp/docker-radicale/blob/master/LICENSE)
 
 ### Supported tags and respective Dockerfile links  
-- [`rocky8`](https://github.com/takeyamajp/docker-radicale/blob/master/rocky8/Dockerfile) (Rocky Linux)
-- [`latest`, `centos8`](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile) (We have finished support for CentOS 8.)
+- [`latest`, `rocky8`](https://github.com/takeyamajp/docker-radicale/blob/master/rocky8/Dockerfile) (Rocky Linux)
+- [`centos8`](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile) (We have finished support for CentOS 8.)
 - [`centos7`](https://github.com/takeyamajp/docker-radicale/blob/master/centos7/Dockerfile)
 
 ### Image summary
-    FROM centos:centos8  
+    FROM rockylinux/rockylinux:8  
     MAINTAINER "Hiroki Takeyama"
     
     ENV TIMEZONE Asia/Tokyo
@@ -41,7 +41,7 @@ However, it can be simply used without the reverse proxy server.
 Please access it via `http://localhost:5232` in your browser.
 
 ## Time zone
-You can use any time zone such as America/Chicago that can be used in CentOS.  
+You can use any time zone such as America/Chicago that can be used in Rocky Linux.  
 
 See below for zones.  
 https://www.unicode.org/cldr/charts/latest/verify/zones/en.html
