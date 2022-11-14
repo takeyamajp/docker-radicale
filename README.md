@@ -6,7 +6,7 @@ Star this repository if it is useful for you.
 
 ### Supported tags and respective Dockerfile links  
 - [`rocky8`](https://github.com/takeyamajp/docker-radicale/blob/master/rocky8/Dockerfile) (Rocky Linux)
-- [`latest`, `centos8`](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile) (We have finished support to CentOS 8.)
+- [`latest`, `centos8`](https://github.com/takeyamajp/docker-radicale/blob/master/centos8/Dockerfile) (We have finished support for CentOS 8.)
 - [`centos7`](https://github.com/takeyamajp/docker-radicale/blob/master/centos7/Dockerfile)
 
 ### Image summary
