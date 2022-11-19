@@ -73,4 +73,4 @@ VOLUME /radicale
 EXPOSE 5232
 
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["python3.9", "-m", "radicale", "--config", "/conf/conf"]
+CMD ["python3", "-m", "radicale", "--config", "/conf/conf"]
