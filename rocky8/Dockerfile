@@ -10,10 +10,8 @@ RUN mkdir /cert; \
     dnf clean all;
 
 # python
-RUN dnf -y install epel-release; \
-    dnf -y install python39 httpd-tools; \
-    python3.9 -m ensurepip; \
-    pip install bcrypt passlib; \
+RUN dnf -y install python39 httpd-tools; \
+    pip3 install bcrypt passlib; \
     dnf clean all;
 
 # radicale
